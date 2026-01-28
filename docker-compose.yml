@@ -1,0 +1,39 @@
+services:
+  postgres:
+    image: postgres:alpine
+    container_name: plank-postgres
+    environment:
+      POSTGRES_USER: plank
+      POSTGRES_PASSWORD: plank
+      POSTGRES_DB: plank
+    volumes:
+      - postgres_data:/var/lib/postgresql/data
+    ports:
+      - "5432:5432"
+    networks:
+      - plank-network
+
+  redis:
+    image: redis:alpine
+    container_name: plank-redis
+    ports:
+      - "6379:6379"
+    networks:
+      - plank-network
+
+  ollama:
+    image: ollama/ollama
+    container_name: plank-ollama
+    volumes:
+      - ~/.ollama:/root/.ollama
+    ports:
+      - "11434:11434"
+    networks:
+      - plank-network
+
+networks:
+  plank-network:
+    driver: bridge
+
+volumes:
+  postgres_data:

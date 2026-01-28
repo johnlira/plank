@@ -1,0 +1,11 @@
+{
+  "name": "plank",
+  "version": "1.0.0",
+  "private": true,
+  "scripts": {
+    "dev": "concurrently \"pnpm --filter server dev\" \"pnpm --filter client dev\""
+  },
+  "devDependencies": {
+    "concurrently": "^9.1.2"
+  }
+}
