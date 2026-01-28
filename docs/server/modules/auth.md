@@ -4,7 +4,7 @@
 I need to implement the `auth` module in the server application. The goal is to handle user registration and session management using JWTs stored strictly in HTTP-Only cookies (stateless session) for security.
 
 **Architectural Standards:**
-- **Path:** `src/modules/auth/`
+- **Path:** `modules/auth/`
 - **Pattern:** Repository-Service-Controller (as defined in `backend-architecture.md`).
 - **Database:** Raw SQL with `pg` driver (Table: `users`).
 - **Validation:** `zod` schemas.
