@@ -1,6 +1,6 @@
 import { Request, Response, NextFunction } from "express";
 import { z } from "zod";
-import { ValidationError } from "../../err/server-errors";
+import { ValidationError } from "../err/server-errors";
 
 export const validateBody = <T>(schema: z.ZodType<T>) => {
   return (req: Request, res: Response, next: NextFunction) => {

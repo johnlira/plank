@@ -1,7 +1,7 @@
 import { Request, Response, NextFunction } from "express";
 import jwt from "jsonwebtoken";
-import { env } from "../../config/env";
-import { UnauthorizedError } from "../../err/server-errors";
+import { env } from "../config/env";
+import { UnauthorizedError } from "../err/server-errors";
 
 interface TokenPayload {
   userId: string;

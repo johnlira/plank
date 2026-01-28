@@ -1,4 +1,4 @@
-import { pool } from "../../../lib/database";
+import { pool } from "../lib/database";
 import { User, UserWithPassword } from "./auth.types";
 
 interface CreateUserData {

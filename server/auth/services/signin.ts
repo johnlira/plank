@@ -2,8 +2,8 @@ import bcrypt from "bcryptjs";
 import jwt from "jsonwebtoken";
 import { authRepository } from "../auth.repository";
 import { SignInInput, User } from "../auth.types";
-import { env } from "../../../../config/env";
-import { UnauthorizedError } from "../../../../err/server-errors";
+import { env } from "../../config/env";
+import { UnauthorizedError } from "../../err/server-errors";
 
 interface SignInResult {
   user: User;
