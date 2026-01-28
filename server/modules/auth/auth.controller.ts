@@ -2,8 +2,8 @@ import { Request, Response } from "express";
 import { SignUpInput, SignInInput } from "./auth.types";
 import { signUp, signIn } from "./services";
 import { authRepository } from "./auth.repository";
-import { env } from "../config/env";
-import { UnauthorizedError, NotFoundError } from "../err/server-errors";
+import { env } from "../../config/env";
+import { UnauthorizedError, NotFoundError } from "../../err/server-errors";
 
 const COOKIE_OPTIONS = {
   httpOnly: true,
