@@ -1,4 +1,5 @@
 import { create } from "zustand";
+import { toast } from "sonner";
 
 const API_URL = process.env.NEXT_PUBLIC_API_URL || "http://localhost:3333/api";
 
@@ -44,15 +45,18 @@ export const useAuthStore = create<AuthStore>((set) => ({
         throw new Error(data.message || "Failed to sign in");
       }
 
-      const data = await response.json();
-      set({ user: data.user, isLoading: false });
+      const user = await response.json();
+      set({ user, isLoading: false });
+
+      toast.success("Welcome back!", {
+        description: `Signed in as ${user.email}`,
+      });
 
       window.location.href = "/garden";
     } catch (error) {
-      set({
-        error: error instanceof Error ? error.message : "Failed to sign in",
-        isLoading: false,
-      });
+      const message = error instanceof Error ? error.message : "Failed to sign in";
+      set({ error: message, isLoading: false });
+      toast.error("Sign in failed", { description: message });
     }
   },
 
@@ -73,12 +77,15 @@ export const useAuthStore = create<AuthStore>((set) => ({
 
       set({ isLoading: false });
 
+      toast.success("Account created!", {
+        description: "You can now sign in with your credentials",
+      });
+
       window.location.href = "/signin";
     } catch (error) {
-      set({
-        error: error instanceof Error ? error.message : "Failed to sign up",
-        isLoading: false,
-      });
+      const message = error instanceof Error ? error.message : "Failed to sign up";
+      set({ error: message, isLoading: false });
+      toast.error("Sign up failed", { description: message });
     }
   },
 
@@ -94,8 +101,8 @@ export const useAuthStore = create<AuthStore>((set) => ({
         return;
       }
 
-      const data = await response.json();
-      set({ user: data.user, isLoading: false });
+      const user = await response.json();
+      set({ user, isLoading: false });
     } catch {
       set({ user: null, isLoading: false });
     }
@@ -110,9 +117,17 @@ export const useAuthStore = create<AuthStore>((set) => ({
       });
 
       set({ user: null, isLoading: false });
+
+      toast.success("Logged out", {
+        description: "See you next time!",
+      });
+
       window.location.href = "/signin";
     } catch {
       set({ isLoading: false });
+      toast.error("Logout failed", {
+        description: "Please try again",
+      });
     }
   },
 
