@@ -2,10 +2,16 @@ import Image from "next/image";
 import Link from "next/link";
 import { ArrowRight } from "lucide-react";
 import { Button } from "@/components/ui/button";
+import { ThemeToggle } from "@/components/theme-toggle";
 
 export default function Home() {
   return (
-    <div className="flex min-h-screen flex-col items-center bg-background px-6 py-12">
+    <div className="relative flex min-h-screen flex-col items-center bg-background px-6 py-12">
+      {/* Theme Toggle */}
+      <div className="absolute right-6 top-6">
+        <ThemeToggle />
+      </div>
+
       {/* Logo */}
       <span className="mb-12 text-3xl font-semibold text-foreground">Plank</span>
 

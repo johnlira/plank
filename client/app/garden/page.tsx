@@ -4,6 +4,7 @@ import { useEffect } from "react";
 import { Plus, LogOut } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import { Card, CardContent } from "@/components/ui/card";
+import { ThemeToggle } from "@/components/theme-toggle";
 import { useAuthStore } from "@/stores/useAuthStore";
 
 export default function Garden() {
@@ -26,15 +27,18 @@ export default function Garden() {
       {/* Header */}
       <header className="flex items-center justify-between border-b px-6 py-4">
         <span className="text-xl font-semibold text-foreground">Plank</span>
-        <Button
-          variant="ghost"
-          size="sm"
-          onClick={logout}
-          className="cursor-pointer gap-2"
-        >
-          <LogOut className="size-4" />
-          Logout
-        </Button>
+        <div className="flex items-center gap-2">
+          <ThemeToggle />
+          <Button
+            variant="ghost"
+            size="sm"
+            onClick={logout}
+            className="cursor-pointer gap-2"
+          >
+            <LogOut className="size-4" />
+            Logout
+          </Button>
+        </div>
       </header>
 
       {/* Main Content */}
