@@ -1,6 +1,7 @@
 "use client";
 
 import Link from "next/link";
+import { useRouter } from "next/navigation";
 import { useForm } from "react-hook-form";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { Button } from "@/components/ui/button";
@@ -11,6 +12,7 @@ import { useAuthStore } from "@/stores/useAuthStore";
 import { signUpSchema, type SignUpInput } from "@/lib/schemas/auth";
 
 export function SignUpForm() {
+  const router = useRouter();
   const { register: registerUser, isLoading, error, clearError } = useAuthStore();
 
   const {
@@ -24,7 +26,10 @@ export function SignUpForm() {
 
   const onSubmit = async (data: SignUpInput) => {
     clearError();
-    await registerUser(data.name, data.email, data.password);
+    const success = await registerUser(data.name, data.email, data.password);
+    if (success) {
+      router.push("/signin");
+    }
   };
 
   return (

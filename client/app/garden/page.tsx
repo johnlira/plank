@@ -6,13 +6,13 @@ import { WelcomeSection, PlantsGrid } from "@/components/garden";
 import { useAuthStore } from "@/stores/useAuthStore";
 
 export default function Garden() {
-  const { user, isLoading, checkAuth } = useAuthStore();
+  const { user, isInitialized, checkAuth } = useAuthStore();
 
   useEffect(() => {
     checkAuth();
   }, [checkAuth]);
 
-  if (isLoading) {
+  if (!isInitialized) {
     return <PageLoading />;
   }
 

@@ -1,12 +1,21 @@
 "use client";
 
+import { useRouter } from "next/navigation";
 import { LogOut } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import { ThemeToggle } from "@/components/theme-toggle";
 import { useAuthStore } from "@/stores/useAuthStore";
 
 export function Header() {
+  const router = useRouter();
   const { logout } = useAuthStore();
+
+  const handleLogout = async () => {
+    const success = await logout();
+    if (success) {
+      router.push("/signin");
+    }
+  };
 
   return (
     <header className="flex items-center justify-between border-b px-6 py-4">
@@ -16,7 +25,7 @@ export function Header() {
         <Button
           variant="ghost"
           size="sm"
-          onClick={logout}
+          onClick={handleLogout}
           className="cursor-pointer gap-2"
         >
           <LogOut className="size-4" />

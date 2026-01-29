@@ -12,14 +12,15 @@ interface User {
 interface AuthState {
   user: User | null;
   isLoading: boolean;
+  isInitialized: boolean;
   error: string | null;
 }
 
 interface AuthActions {
-  login: (email: string, password: string) => Promise<void>;
-  register: (name: string, email: string, password: string) => Promise<void>;
+  login: (email: string, password: string) => Promise<boolean>;
+  register: (name: string, email: string, password: string) => Promise<boolean>;
   checkAuth: () => Promise<void>;
-  logout: () => Promise<void>;
+  logout: () => Promise<boolean>;
   clearError: () => void;
 }
 
@@ -28,6 +29,7 @@ type AuthStore = AuthState & AuthActions;
 export const useAuthStore = create<AuthStore>((set) => ({
   user: null,
   isLoading: false,
+  isInitialized: false,
   error: null,
 
   login: async (email: string, password: string) => {
@@ -52,11 +54,12 @@ export const useAuthStore = create<AuthStore>((set) => ({
         description: `Signed in as ${user.email}`,
       });
 
-      window.location.href = "/garden";
+      return true;
     } catch (error) {
       const message = error instanceof Error ? error.message : "Failed to sign in";
       set({ error: message, isLoading: false });
       toast.error("Sign in failed", { description: message });
+      return false;
     }
   },
 
@@ -81,11 +84,12 @@ export const useAuthStore = create<AuthStore>((set) => ({
         description: "You can now sign in with your credentials",
       });
 
-      window.location.href = "/signin";
+      return true;
     } catch (error) {
       const message = error instanceof Error ? error.message : "Failed to sign up";
       set({ error: message, isLoading: false });
       toast.error("Sign up failed", { description: message });
+      return false;
     }
   },
 
@@ -97,14 +101,14 @@ export const useAuthStore = create<AuthStore>((set) => ({
       });
 
       if (!response.ok) {
-        set({ user: null, isLoading: false });
+        set({ user: null, isLoading: false, isInitialized: true });
         return;
       }
 
       const user = await response.json();
-      set({ user, isLoading: false });
+      set({ user, isLoading: false, isInitialized: true });
     } catch {
-      set({ user: null, isLoading: false });
+      set({ user: null, isLoading: false, isInitialized: true });
     }
   },
 
@@ -122,12 +126,13 @@ export const useAuthStore = create<AuthStore>((set) => ({
         description: "See you next time!",
       });
 
-      window.location.href = "/signin";
+      return true;
     } catch {
       set({ isLoading: false });
       toast.error("Logout failed", {
         description: "Please try again",
       });
+      return false;
     }
   },
 
