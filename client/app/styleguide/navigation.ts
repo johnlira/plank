@@ -16,7 +16,11 @@ export const navigation: NavSection[] = [
   {
     title: "Components",
     items: [
-      // Components will be added here
+      { name: "Feature Card", href: "/styleguide/components/feature-card" },
+      {
+        name: "Plant Presentation Card",
+        href: "/styleguide/components/plant-presentation-card",
+      },
     ],
   },
 ];
