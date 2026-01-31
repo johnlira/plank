@@ -8,49 +8,50 @@ export default function PlantPresentationCardShowcase() {
       <div>
         <h1 className="text-3xl font-bold">Plant Presentation Card</h1>
         <p className="mt-2 text-muted-foreground">
-          Card para apresentar uma planta: ícone (gerado pela IA), nome, descrição e botão &quot;Detalhes&quot;. A imagem do ícone tem padding para aparecer completa, sem corte.
+          Card to display a plant: icon (AI-generated), name, description, and &quot;Details&quot; link. When pending AI analysis, shows a spinner and &quot;AI analysis in progress&quot;. The icon area has padding so the image is fully visible.
         </p>
       </div>
 
-      {/* Demo com imagem de exemplo */}
+      {/* Demo with sample image */}
       <section className="space-y-4">
-        <h2 className="text-xl font-semibold">Exemplo</h2>
+        <h2 className="text-xl font-semibold">Example</h2>
         <p className="text-sm text-muted-foreground">
-          O título é o nome da planta, a descrição é sobre a planta. O ícone no topo será o gerado pela IA; para demonstração usa-se uma imagem de exemplo. A área da imagem tem padding para a ilustração aparecer inteira.
+          The title is the plant name, the description is about the plant. The top icon is AI-generated; for demo we use a sample image. The image area has padding so the illustration is fully visible.
         </p>
         <div className="max-w-sm">
           <PlantPresentationCard
-            name="Rosa do deserto"
+            name="Desert rose"
             description="Track your plants, get care reminders, and learn from AI-powered identification."
             iconSrc="/plantasonya-removebg-preview.png"
-            iconAlt="Planta"
+            iconAlt="Plant"
             href="/garden/demo"
           />
         </div>
         <pre className="mt-4 overflow-x-auto rounded-lg border bg-muted p-4 text-sm">
           {`<PlantPresentationCard
-  name="Rosa do deserto"
+  name="Desert rose"
   description="Track your plants, get care reminders..."
   iconSrc="/plantasonya-removebg-preview.png"
-  iconAlt="Planta"
+  iconAlt="Plant"
   href="/garden/demo"
 />`}
         </pre>
       </section>
 
-      {/* Uso com dados da API */}
+      {/* Usage with API data */}
       <section className="space-y-4">
-        <h2 className="text-xl font-semibold">Uso com dados da planta</h2>
+        <h2 className="text-xl font-semibold">Usage with plant data</h2>
         <p className="text-sm text-muted-foreground">
-          Em produção, use <code className="rounded bg-muted px-1">iconPath</code> (ícone gerado pela IA) e <code className="rounded bg-muted px-1">description</code> retornados pela API. O título é o <code className="rounded bg-muted px-1">nickname</code> da planta.
+          In production, use <code className="rounded bg-muted px-1">iconPath</code> (AI-generated icon) and <code className="rounded bg-muted px-1">description</code> from the API. The title is the plant&apos;s <code className="rounded bg-muted px-1">nickname</code>. Pass <code className="rounded bg-muted px-1">isPendingAnalysis</code> when <code className="rounded bg-muted px-1">aiProcessingStatus === &quot;PENDING&quot;</code>.
         </p>
         <pre className="overflow-x-auto rounded-lg border bg-muted p-4 text-sm">
           {`<PlantPresentationCard
   name={plant.nickname}
-  description={plant.description ?? "Sem descrição."}
-  iconSrc={plant.iconPath ?? plant.originalImagePath ?? "/placeholder.png"}
+  description={plant.description ?? "No description."}
+  iconSrc={getPlantImageUrl(plant)}
   iconAlt={plant.nickname}
   href={\`/garden/\${plant.id}\`}
+  isPendingAnalysis={plant.aiProcessingStatus === "PENDING"}
 />`}
         </pre>
       </section>
@@ -63,35 +64,40 @@ export default function PlantPresentationCardShowcase() {
             <thead>
               <tr className="border-b bg-muted/50">
                 <th className="p-3 font-medium">Prop</th>
-                <th className="p-3 font-medium">Tipo</th>
-                <th className="p-3 font-medium">Descrição</th>
+                <th className="p-3 font-medium">Type</th>
+                <th className="p-3 font-medium">Description</th>
               </tr>
             </thead>
             <tbody>
               <tr className="border-b">
                 <td className="p-3 font-mono">name</td>
                 <td className="p-3">string</td>
-                <td className="p-3">Nome da planta (título)</td>
+                <td className="p-3">Plant name (title)</td>
               </tr>
               <tr className="border-b">
                 <td className="p-3 font-mono">description</td>
                 <td className="p-3">string</td>
-                <td className="p-3">Descrição da planta</td>
+                <td className="p-3">Plant description</td>
               </tr>
               <tr className="border-b">
                 <td className="p-3 font-mono">iconSrc</td>
                 <td className="p-3">string</td>
-                <td className="p-3">URL do ícone (gerado pela IA)</td>
+                <td className="p-3">Icon/image URL (AI-generated)</td>
               </tr>
               <tr className="border-b">
                 <td className="p-3 font-mono">iconAlt</td>
                 <td className="p-3">string</td>
-                <td className="p-3">Alt da imagem (default: name)</td>
+                <td className="p-3">Image alt (default: name)</td>
               </tr>
-              <tr>
+              <tr className="border-b">
                 <td className="p-3 font-mono">href</td>
                 <td className="p-3">string</td>
-                <td className="p-3">Link para a página de detalhes</td>
+                <td className="p-3">Link to detail page</td>
+              </tr>
+              <tr>
+                <td className="p-3 font-mono">isPendingAnalysis</td>
+                <td className="p-3">boolean</td>
+                <td className="p-3">When true, shows spinner and &quot;AI analysis in progress&quot;</td>
               </tr>
             </tbody>
           </table>

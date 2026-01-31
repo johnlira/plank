@@ -22,9 +22,9 @@ import type { Plant } from "@/lib/types/plant";
 // Helpers
 function getCareLevelLabel(level: string) {
   const labels: Record<string, string> = {
-    EASY: "Fácil",
-    MEDIUM: "Médio",
-    HARD: "Difícil",
+    EASY: "Easy",
+    MEDIUM: "Medium",
+    HARD: "Hard",
   };
   return labels[level] || level;
 }
@@ -40,18 +40,18 @@ function getCareLevelColor(level: string) {
 
 function getHumidityLabel(humidity: string) {
   const labels: Record<string, string> = {
-    LOW: "até 40%",
-    MEDIUM: "até 60%",
-    HIGH: "até 82%",
+    LOW: "up to 40%",
+    MEDIUM: "up to 60%",
+    HIGH: "up to 82%",
   };
   return labels[humidity] || humidity;
 }
 
 function getLightLabel(type: string) {
   const labels: Record<string, string> = {
-    DIRECT: "Luz direta",
-    INDIRECT: "Luz indireta",
-    SHADE: "Sombra",
+    DIRECT: "Direct light",
+    INDIRECT: "Indirect light",
+    SHADE: "Shade",
   };
   return labels[type] || type;
 }
@@ -105,9 +105,9 @@ export default function PlantDetailPage() {
   if (!plant) {
     return (
       <div className="min-h-screen flex flex-col items-center justify-center gap-4">
-        <p className="text-muted-foreground">Planta não encontrada</p>
+        <p className="text-muted-foreground">Plant not found</p>
         <Button variant="outline" onClick={() => router.push("/garden")}>
-          Voltar ao jardim
+          Back to garden
         </Button>
       </div>
     );
@@ -119,7 +119,7 @@ export default function PlantDetailPage() {
   return (
     <div className="min-h-screen bg-background">
       <div className="grid lg:grid-cols-2 min-h-screen">
-        {/* Coluna Esquerda - Card de Informações */}
+        {/* Left column - Info card */}
         <div className="p-6 lg:p-12 flex flex-col">
           {/* Header */}
           <div className="flex items-center justify-between mb-8">
@@ -133,13 +133,13 @@ export default function PlantDetailPage() {
             </Button>
             <Button variant="outline" size="sm" className="gap-2 cursor-pointer">
               <Share2 className="w-4 h-4" />
-              Compartilhar
+              Share
             </Button>
           </div>
 
-          {/* Conteúdo Principal */}
+          {/* Main content */}
           <div className="flex-1 flex flex-col">
-            {/* Ícone e Nome */}
+            {/* Icon and name */}
             <div className="flex items-start gap-4 mb-6">
               <div className="relative w-20 h-20 flex-shrink-0 rounded-xl overflow-hidden bg-muted">
                 {plant.iconPath ? (
@@ -167,32 +167,32 @@ export default function PlantDetailPage() {
               </div>
             </div>
 
-            {/* Descrição */}
+            {/* Description */}
             {plant.description && (
               <p className="text-muted-foreground leading-relaxed mb-8">
                 {plant.description}
               </p>
             )}
 
-            {/* Estado de processamento */}
+            {/* Processing status */}
             {isPending && (
               <div className="flex items-center gap-3 p-4 bg-blue-500/10 rounded-lg mb-8">
                 <Loader2 className="w-5 h-5 animate-spin text-blue-500" />
                 <div>
-                  <p className="font-medium text-blue-600">Analisando planta...</p>
+                  <p className="font-medium text-blue-600">Analyzing plant...</p>
                   <p className="text-sm text-muted-foreground">
-                    A IA está identificando sua planta
+                    AI is identifying your plant
                   </p>
                 </div>
               </div>
             )}
 
-            {/* Informações rápidas */}
+            {/* Quick info */}
             {aiData && (
               <div className="space-y-4 mb-8">
                 <div className="flex items-center gap-3">
                   <Leaf className="w-4 h-4 text-muted-foreground" />
-                  <span className="text-muted-foreground">Nível de cuidado</span>
+                  <span className="text-muted-foreground">Care level</span>
                   <Badge
                     variant="outline"
                     className={getCareLevelColor(aiData.care_level)}
@@ -204,7 +204,7 @@ export default function PlantDetailPage() {
                 {aiData.environment.toxicity_pets && (
                   <div className="flex items-center gap-3 text-amber-600">
                     <AlertTriangle className="w-4 h-4" />
-                    <span className="text-sm">Tóxica para animais de estimação</span>
+                    <span className="text-sm">Toxic to pets</span>
                   </div>
                 )}
               </div>
@@ -213,25 +213,25 @@ export default function PlantDetailPage() {
             {/* Spacer */}
             <div className="flex-1" />
 
-            {/* Botões de ação */}
+            {/* Action buttons */}
             <div className="space-y-3">
               <Button className="w-full cursor-pointer" size="lg">
-                Regar Agora
+                Water now
               </Button>
               <Button
                 variant="outline"
                 className="w-full cursor-pointer"
                 size="lg"
               >
-                Adicionar ao Calendário
+                Add to calendar
               </Button>
             </div>
           </div>
         </div>
 
-        {/* Coluna Direita - Imagem e Métricas */}
+        {/* Right column - Image and metrics */}
         <div className="relative bg-muted/30 lg:rounded-l-[3rem] overflow-hidden">
-          {/* Imagem da planta */}
+          {/* Plant image */}
           <div className="relative h-[50vh] lg:h-[60vh]">
             {plant.originalImagePath ? (
               <Image
@@ -247,7 +247,7 @@ export default function PlantDetailPage() {
             )}
           </div>
 
-          {/* Card de Métricas */}
+          {/* Metrics card */}
           {aiData && (
             <Card className="mx-4 lg:mx-8 -mt-16 relative z-10 shadow-lg">
               <CardContent className="p-6">
@@ -256,17 +256,17 @@ export default function PlantDetailPage() {
                   <div className="flex items-center justify-between py-2">
                     <span className="flex items-center gap-3 text-muted-foreground">
                       <Droplets className="w-4 h-4" />
-                      Água
+                      Water
                     </span>
                     <span className="font-medium">
-                      a cada {aiData.watering.frequency_summer_days} dias
+                      every {aiData.watering.frequency_summer_days} days
                     </span>
                   </div>
 
                   <div className="flex items-center justify-between py-2">
                     <span className="flex items-center gap-3 text-muted-foreground">
                       <Wind className="w-4 h-4" />
-                      Umidade
+                      Humidity
                     </span>
                     <span className="font-medium">
                       {getHumidityLabel(aiData.environment.humidity)}
@@ -276,7 +276,7 @@ export default function PlantDetailPage() {
                   <div className="flex items-center justify-between py-2">
                     <span className="flex items-center gap-3 text-muted-foreground">
                       <Sun className="w-4 h-4" />
-                      Luz
+                      Light
                     </span>
                     <span className="font-medium">
                       {getLightLabel(aiData.light.type)}
@@ -284,14 +284,14 @@ export default function PlantDetailPage() {
                   </div>
                 </div>
 
-                {/* Notas de cuidado */}
+                {/* Care notes */}
                 {aiData.watering.notes && (
                   <p className="text-sm text-muted-foreground mt-6 pt-4 border-t leading-relaxed">
                     {aiData.watering.notes}
                   </p>
                 )}
 
-                {/* Cards de métricas */}
+                {/* Metric cards */}
                 <div className="grid grid-cols-2 gap-3 mt-6">
                   <div className="bg-muted/50 rounded-xl p-4 text-center">
                     <div className="flex justify-center gap-1 mb-2 text-muted-foreground">
@@ -300,7 +300,7 @@ export default function PlantDetailPage() {
                       <Droplets className="w-4 h-4" />
                     </div>
                     <p className="text-xs text-green-600 font-medium mb-1">
-                      Água
+                      Water
                     </p>
                     <p className="text-xl font-bold">
                       {getWaterAmount(aiData.watering.amount)}
@@ -312,7 +312,7 @@ export default function PlantDetailPage() {
                       <Sun className="w-5 h-5" />
                     </div>
                     <p className="text-xs text-green-600 font-medium mb-1">
-                      Temperatura
+                      Temperature
                     </p>
                     <p className="text-xl font-bold">
                       {aiData.environment.min_temp_celsius}-
