@@ -1,6 +1,7 @@
 import { plantsRepository } from "../plants.repository";
 import { Plant } from "../plants.types";
 import { BadRequestError } from "../../../err/server-errors";
+import { addPlantJob } from "../jobs/queue";
 
 interface CreatePlantParams {
   userId: string;
@@ -22,8 +23,7 @@ export async function createPlant({
     originalImagePath: file.path,
   });
 
-  // TODO: Trigger AI Background Job (BullMQ) here
-  // Example: await aiQueue.add('identify-plant', { plantId: plant.id });
+  await addPlantJob(plant.id, plant.originalImagePath!);
 
   return plant;
 }

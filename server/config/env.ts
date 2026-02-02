@@ -7,6 +7,9 @@ const _env = z.object({
   DATABASE_URL: z.string().min(1, ".env is invalid: DATABASE_URL not defined"),
   NODE_ENV: z.enum(["development", "production"]).default("development"),
   JWT_SECRET: z.string().min(1, ".env is invalid: JWT_SECRET not defined"),
+  REDIS_HOST: z.string().default("localhost"),
+  REDIS_PORT: z.coerce.number().default(6379),
+  GEMINI_API_KEY: z.string().min(1, ".env is invalid: GEMINI_API_KEY not defined"),
 });
 
 function validateEnv() {

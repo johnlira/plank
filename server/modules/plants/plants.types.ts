@@ -42,6 +42,12 @@ export type AIPlantData = {
   };
 };
 
+/** Full JSON returned by Gemini (includes scientific_name + description + care data) */
+export type AIPlantResponse = AIPlantData & {
+  scientific_name: string;
+  description: string;
+};
+
 // ==========================================
 // DATABASE TYPES
 // ==========================================
